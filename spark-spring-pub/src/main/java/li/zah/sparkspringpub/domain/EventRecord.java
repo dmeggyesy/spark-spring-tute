@@ -1,4 +1,4 @@
-package li.zah.sparkspringtuteapi.domain;
+package li.zah.sparkspringpub.domain;
 
 import java.io.Serializable;
 import java.util.List;

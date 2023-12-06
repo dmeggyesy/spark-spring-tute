@@ -1,0 +1,8 @@
+allprojects {
+    apply plugin: 'base'
+    clean {
+        delete "${projectDir}/out"
+        delete "${projectDir}/catalina.base_IS_UNDEFINED"
+        delete "${projectDir}/src/generated"
+    }
+}

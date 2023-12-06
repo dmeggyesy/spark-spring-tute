@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,9 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import li.zah.sparkspringtuteapi.domain.AverageCombiner;
-import li.zah.sparkspringtuteapi.domain.EventRecord;
-import li.zah.sparkspringtuteapi.domain.EventRecords;
+import li.zah.sparkspringpub.SparkSpringPub;
+import li.zah.sparkspringpub.domain.AverageCombiner;
+import li.zah.sparkspringpub.domain.EventRecord;
+import li.zah.sparkspringpub.domain.EventRecords;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import com.clearspring.analytics.util.Lists;
@@ -35,50 +35,26 @@ public class SparkTuteService implements Serializable {
   private JavaSparkContext sparkContext;
 
   public String test() {
-
-    List<Integer> data = Arrays.asList(10, 11, 12, 13, 14, 15);
-    JavaRDD<Integer> ds = sparkContext.parallelize(data);
-    System.out.println("*** only one column, and it always has the same name");
-
-    JavaRDD<Integer> res = ds.filter(x -> x > 12);
-
-    System.out.println("*** values > 12");
-
-    res.collect().forEach(System.out::println);
-
-    System.out.println(res);
-
-    return res.toString();
+    return SparkSpringPub.test(sparkContext);
   }
 
   public List<EventRecord> filterByEmpId(EventRecords record, String empId) {
 
-    JavaRDD<List<String>> dataset = sparkContext.parallelize(record.getEvents());
-
-    JavaRDD<EventRecord> eventRecordRDD = dataset.map(EventRecord::new);
-
-    return eventRecordRDD.filter(r -> empId.equals(r.getEmployeeId())).collect();
-
+    return SparkSpringPub.filterByEmpId(sparkContext, record, empId);
   }
 
   public JavaPairRDD<String, Iterable<EventRecord>> groupedByEmployeeId(JavaRDD<EventRecord> dataset) {
-    return dataset.groupBy(EventRecord::getEmployeeId);
+    return SparkSpringPub.groupedByEmployeeId(dataset);
   }
 
   public JavaRDD<EventRecord> loadEventRecord(EventRecords record) {
 
-    JavaRDD<List<String>> dataset = sparkContext.parallelize(record.getEvents());
-
-    return dataset.map(EventRecord::new);
+    return SparkSpringPub.loadEventRecord(sparkContext, record);
 
   }
 
   public Map<String, List<EventRecord>> getAllEventsByEmployees(EventRecords record) {
-
-    JavaRDD<EventRecord> eventRecordRDD = loadEventRecord(record);
-
-    return groupedByEmployeeId(eventRecordRDD).mapValues(v -> Lists.newArrayList(v))
-        .collectAsMap();
+    return SparkSpringPub.getAllEventsByEmployees(sparkContext, record);
   }
 
   public Long getNumberOfEmployeesAtTimestep(EventRecords record, LocalDate date) {

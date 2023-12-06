@@ -18,8 +18,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import li.zah.sparkspringtuteapi.domain.EventRecord;
-import li.zah.sparkspringtuteapi.domain.EventRecords;
+import li.zah.sparkspringpub.domain.EventRecord;
+import li.zah.sparkspringpub.domain.EventRecords;
 import li.zah.sparkspringtuteapi.service.SparkTuteService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

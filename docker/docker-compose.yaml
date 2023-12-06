@@ -13,8 +13,8 @@ services:
     ports:
       - '9080:8080'
       - '7077:7077'
-  #       volumes:
-  #           - ../build/libs/spark-tute-0.0.1-SNAPSHOT.jar:/opt/bitnami/spark/jars/spark-tute-0.0.1-SNAPSHOT.jar
+    volumes:
+      - ../spark-spring-pub/build/libs/spark-spring-pub-1.0-SNAPSHOT-all.jar:/opt/bitnami/spark/jars/spark-spring-pub-1.0-SNAPSHOT-all.jar
   spark-worker:
     image: docker.io/bitnami/spark:3.5
     deploy:
@@ -29,6 +29,5 @@ services:
       - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
       - SPARK_SSL_ENABLED=no
       - SPARK_USER=spark
-#        volumes:
-#            - ../build/libs/spark-tute-0.0.1-SNAPSHOT.jar:/opt/bitnami/spark/jars/spark-tute-0.0.1-SNAPSHOT.jar
-
+    volumes:
+      - ../spark-spring-pub/build/libs/spark-spring-pub-1.0-SNAPSHOT-all.jar:/opt/bitnami/spark/jars/spark-spring-pub-1.0-SNAPSHOT-all.jar
