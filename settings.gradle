@@ -1,0 +1,3 @@
+rootProject.name = 'spark-spring-tute'
+include 'spark-spring-pub'
+include 'spark-spring-tute-api'
